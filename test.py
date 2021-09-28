@@ -2,11 +2,48 @@ import os
 import json
 import sys
 import openai
-from pprint import pprint
+import hashlib
+from datetime import datetime
 
+from pprint import pprint
 from ipdb import set_trace
 from dotenv import load_dotenv
 
+# -----------------------------------------------=
+# -----------------------------------------------=
+# -----------------------------------------------=
+def hash_string(string):
+    """
+    Return a SHA-256 hash of the given string
+    """
+    return hashlib.sha256(string.encode('utf-8')).hexdigest()
+
+def write_prompt_output_to_file(output):
+    # filename = f"{hash_string(json.dumps(output))}.json"
+    # datetime_string = datetime.now().isoformat('_', 'seconds')
+    datetime_string = datetime.now().isoformat('_')
+
+    filename = f"{datetime_string}.json"
+    with open(f"completions/{filename}", 'w', encoding='utf-8') as f:
+        json.dump(output, f, ensure_ascii=False, indent=4)
+
+def process_prompt(params, prompt, write_to_completions_file=True):
+    completion = openai.Completion.create(**{**params, 'prompt': prompt})
+    response = completion.choices[0].text.lstrip()
+
+    print(f"**{prompt}**")
+    print(f"> {response}")
+
+    output = {**params, 'prompt': 'prompt', 'response': response}
+
+    if write_to_completions_file:
+        write_prompt_output_to_file(output)
+
+    return output
+
+# -----------------------------------------------=
+# -----------------------------------------------=
+# -----------------------------------------------=
 load_dotenv()
 
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
@@ -17,29 +54,6 @@ openai.api_key = OPENAI_API_KEY
 # - davinci-codex
 # - davinci-instruct-beta
 engines = openai.Engine.list()
-
-working_params = dict(
-    engine="davinci-instruct-beta",
-    max_tokens=100,
-    temperature=0.5,
-    top_p=1,
-    # stop=[],
-    presence_penalty=0,
-    frequency_penalty=0.4,
-    best_of=1
-    # logit_bias=None
-)
-
-def process_prompt(params, prompt):
-    completion = openai.Completion.create(**{**params, 'prompt': prompt})
-    response = completion.choices[0].text.lstrip()
-
-    print(f"**{prompt}**")
-    print(f"> {response}")
-
-    return {**params, 'prompt': 'prompt', 'response': response}
-
-
 
 # PROMPT = """Explain the moon landing to a 6 year old in a few sentences."""
 # PROMPT = """Explain what Bitcoin is and how it relates to the blockchain."""
@@ -53,8 +67,20 @@ def process_prompt(params, prompt):
 # PROMPT = "Does a photon experience time? If not, why?"
 PROMPT = "Does a photon experience time? If not, why?"
 
+working_params = dict(
+    engine="davinci-instruct-beta",
+    max_tokens=100,
+    temperature=0.5,
+    top_p=1,
+    # stop=[],
+    presence_penalty=0,
+    frequency_penalty=0.4,
+    best_of=1
+    # logit_bias=None
+)
 
 output = process_prompt(working_params, PROMPT)
 
-pprint(output)
+write_prompt_output_to_file(output)
+
 
