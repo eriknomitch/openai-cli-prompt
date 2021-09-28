@@ -67,7 +67,7 @@ working_params = dict(
     # - davinci
     # - davinci-codex
     # - davinci-instruct-beta
-    max_tokens=100,
+    max_tokens=200,
     temperature=0.5,
     top_p=1,
     # stop=[],
@@ -79,8 +79,10 @@ working_params = dict(
 
 pprint(working_params)
 
-print()
+print('\n' * 2)
 
 prompt = input("Prompt: ")
+
+# print('\n' * 2)
 
 process_prompt(working_params, prompt)
