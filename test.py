@@ -34,7 +34,7 @@ def process_prompt(params, prompt, write_to_completions_file=True):
     print(f"**{prompt}**")
     print(f"> {response}")
 
-    output = {**params, 'prompt': 'prompt', 'response': response}
+    output = {**params, 'prompt': prompt, 'response': response}
 
     if write_to_completions_file:
         write_prompt_output_to_file(output)
