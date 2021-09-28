@@ -1,4 +1,6 @@
-# openai-prompt
+# openai-cli-prompt
+
+Simple CLI prompt for easy I/O with OpenAI's API
 
 ## Quickstart
 
