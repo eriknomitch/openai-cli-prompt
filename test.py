@@ -50,11 +50,6 @@ OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 
 openai.api_key = OPENAI_API_KEY
 
-# - davinci
-# - davinci-codex
-# - davinci-instruct-beta
-engines = openai.Engine.list()
-
 # PROMPT = """Explain the moon landing to a 6 year old in a few sentences."""
 # PROMPT = """Explain what Bitcoin is and how it relates to the blockchain."""
 # PROMPT = """Why is the sky blue?"""
@@ -65,10 +60,13 @@ engines = openai.Engine.list()
 # PROMPT = "Can God create a boulder so heavy that even he cannot lift it?"
 # PROMPT = "Have you ever had a dream that you, um, you had, your, you- you could, you’ll do, you- you wants, you, you could do so, you- you’ll do, you could- you, you want, you want them to do you so much you could do anything?"
 # PROMPT = "Does a photon experience time? If not, why?"
-PROMPT = "Does a photon experience time? If not, why?"
+# PROMPT = "Does a photon experience time? If not, why?"
 
 working_params = dict(
     engine="davinci-instruct-beta",
+    # - davinci
+    # - davinci-codex
+    # - davinci-instruct-beta
     max_tokens=100,
     temperature=0.5,
     top_p=1,
@@ -79,8 +77,10 @@ working_params = dict(
     # logit_bias=None
 )
 
-output = process_prompt(working_params, PROMPT)
+pprint(working_params)
 
-write_prompt_output_to_file(output)
+print()
 
+prompt = input("Prompt: ")
 
+process_prompt(working_params, prompt)
