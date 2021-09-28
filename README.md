@@ -4,6 +4,12 @@ Simple CLI prompt for easy I/O with OpenAI's API
 
 ## Quickstart
 
+Create a `.env` file with:
+
+```Shell
+OPENAI_API_KEY=<Your OpenAI API Key>
+```
+
 Configure the `working_params` in `main.py`.
 
 ```Shell
@@ -12,7 +18,11 @@ $ pipenv install
 
 # Start the prompt
 $ pipenv run python main.py
+```
 
+_Example_
+
+```
 Prompt: Explain what Bitcoin is and how it relates to the blockchain.
 > Bitcoin is a digital cryptocurrency that is not backed by any government or central bank. It is used to purchase goods and services, and has a fluctuating value based off of supply and demand. The blockchain is the technology that powers Bitcoin. The blockchain is a decentralized ledger that records all transactions without the need for banks or other intermediaries.
 ```
