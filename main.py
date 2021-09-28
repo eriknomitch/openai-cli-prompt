@@ -9,6 +9,8 @@ from pprint import pprint
 from ipdb import set_trace
 from dotenv import load_dotenv
 
+from config import params
+
 # -----------------------------------------------=
 # -----------------------------------------------=
 # -----------------------------------------------=
@@ -62,22 +64,7 @@ openai.api_key = OPENAI_API_KEY
 # PROMPT = "Does a photon experience time? If not, why?"
 # PROMPT = "Does a photon experience time? If not, why?"
 
-working_params = dict(
-    engine="davinci-instruct-beta",
-    # - davinci
-    # - davinci-codex
-    # - davinci-instruct-beta
-    max_tokens=200,
-    temperature=0.5,
-    top_p=1,
-    # stop=[],
-    presence_penalty=0,
-    frequency_penalty=0.4,
-    best_of=1
-    # logit_bias=None
-)
-
-pprint(working_params)
+pprint(params)
 
 print('\n' * 2)
 
@@ -85,4 +72,4 @@ prompt = input("Prompt: ")
 
 # print('\n' * 2)
 
-process_prompt(working_params, prompt)
+process_prompt(params, prompt)
