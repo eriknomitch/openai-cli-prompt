@@ -6,9 +6,7 @@ name = "pypi"
 [packages]
 openai = "*"
 python-dotenv = "*"
-
-[dev-packages]
-pylint = "*"
+ipdb = "*"
 
 [requires]
 python_version = "3.9"
