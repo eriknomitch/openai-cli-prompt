@@ -10,3 +10,6 @@ ipdb = "*"
 
 [requires]
 python_version = "3.9"
+
+[dev-packages]
+pylint = "*"

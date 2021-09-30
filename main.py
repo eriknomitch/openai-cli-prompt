@@ -3,12 +3,14 @@ import json
 import sys
 import openai
 import hashlib
-from datetime import datetime
+import argparse
 
+from datetime import datetime
 from pprint import pprint
 from ipdb import set_trace
 from dotenv import load_dotenv
 
+# Local
 from config import params
 
 # -----------------------------------------------=
@@ -52,23 +54,17 @@ OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 
 openai.api_key = OPENAI_API_KEY
 
-# PROMPT = """Explain the moon landing to a 6 year old in a few sentences."""
-# PROMPT = """Explain what Bitcoin is and how it relates to the blockchain."""
-# PROMPT = """Why is the sky blue?"""
-# PROMPT = """How much wood could a woodchuck chuck if a woodchuck could chuck wood?"""
-# PROMPT = """How many three-point field goals did Michael Jordan make in 1992 and 1993 combined?"""
-# PROMPT = "What's the answer to this riddle: A clerk at a butcher shop stands five feet ten inches tall and wears size 13 sneakers. What does he weigh?"
-# PROMPT = "What's the answer to this riddle: What language does a billboard speak?"
-# PROMPT = "Can God create a boulder so heavy that even he cannot lift it?"
-# PROMPT = "Have you ever had a dream that you, um, you had, your, you- you could, you’ll do, you- you wants, you, you could do so, you- you’ll do, you could- you, you want, you want them to do you so much you could do anything?"
-# PROMPT = "Does a photon experience time? If not, why?"
-# PROMPT = "Does a photon experience time? If not, why?"
+parser = argparse.ArgumentParser("simple_example")
+parser.add_argument("prompt", help="Prompt", type=str)
+args = parser.parse_args()
 
-pprint(params)
+# pprint(params)
 
-print('\n' * 2)
-
-prompt = input("Prompt: ")
+if not args.prompt:
+    # print('\n' * 2)
+    prompt = input("Prompt: ")
+else:
+    prompt = args.prompt
 
 # print('\n' * 2)
 
