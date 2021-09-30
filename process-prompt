@@ -1,4 +1,8 @@
 #!/usr/bin/env zsh
 
+source ~/.configs/zshrc-asdf
+
+cd ~/.repositories/openai-cli-prompt
+
 pipenv run python main.py "$1"
 

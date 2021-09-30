@@ -35,8 +35,11 @@ def process_prompt(params, prompt, write_to_completions_file=True):
     completion = openai.Completion.create(**{**params, 'prompt': prompt})
     response = completion.choices[0].text.lstrip()
 
-    print(f"**{prompt}**")
-    print(f"> {response}")
+    print(f"{prompt}\n")
+    print(f"{response}")
+
+    # print(f"**{prompt}**")
+    # print(f"> {response}")
 
     output = {**params, 'prompt': prompt, 'response': response}
 
