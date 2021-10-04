@@ -3,7 +3,7 @@ params = dict(
     # - davinci
     # - davinci-codex
     # - davinci-instruct-beta
-    max_tokens=100,
+    max_tokens=300,
     temperature=0.5,
     top_p=1,
     # stop=[],
