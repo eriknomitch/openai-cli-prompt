@@ -174,3 +174,5 @@ cython_debug/
 
 completions/*
 !completions/.keep
+
+scratch.py
