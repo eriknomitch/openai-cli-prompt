@@ -14,8 +14,32 @@ from dotenv import load_dotenv
 from config import params
 
 # -----------------------------------------------=
+# UTILITY ---------------------------------------=
 # -----------------------------------------------=
-# -----------------------------------------------=
+def omit_empty_last_line(lst):
+    """
+    Remove n members of a list if they are at the end of the list and also empty
+    """
+    if lst[-1] == '':
+        return omit_empty_last_line(lst[:-1])
+    else:
+        return lst
+
+def limit_to_single_answer(completion):
+  lines = completion.splitlines()
+
+  limited_lines = []
+
+  for line in lines:
+    if not line.endswith("?"):
+      limited_lines.append(line)
+    else:
+      break
+
+  limited_lines = omit_empty_last_line(limited_lines)
+  
+  return "\n".join(limited_lines)
+
 def hash_string(string):
     """
     Return a SHA-256 hash of the given string
@@ -33,7 +57,9 @@ def write_prompt_output_to_file(output):
 
 def process_prompt(params, prompt, write_to_completions_file=True):
     completion = openai.Completion.create(**{**params, 'prompt': prompt})
-    response = completion.choices[0].text.lstrip()
+    full_response = completion.choices[0].text.lstrip()
+
+    response = limit_to_single_answer(full_response)
 
     print(f"{prompt}\n")
     print(f"{response}")
@@ -41,16 +67,16 @@ def process_prompt(params, prompt, write_to_completions_file=True):
     # print(f"**{prompt}**")
     # print(f"> {response}")
 
-    output = {**params, 'prompt': prompt, 'response': response}
+    output = {**params, 'prompt': prompt, 'response': response, full_response: 'full_response'}
 
     if write_to_completions_file:
         write_prompt_output_to_file(output)
 
     return output
 
-# -----------------------------------------------=
-# -----------------------------------------------=
-# -----------------------------------------------=
+# ================================================
+# MAIN ===========================================
+# ================================================
 load_dotenv()
 
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
